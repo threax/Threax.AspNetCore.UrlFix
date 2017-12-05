@@ -11,11 +11,13 @@ namespace Threax.AspNetCore.UrlFix
     {
         private String correctPathBase;
         private RequestDelegate next;
+        private String protocol;
 
         public UrlFixMiddleware(UrlFixOptions options, RequestDelegate next)
         {
             this.next = next;
             this.correctPathBase = options.CorrectPathBase;
+            this.protocol = options.Protocol;
         }
 
         public async Task Invoke(HttpContext context)
