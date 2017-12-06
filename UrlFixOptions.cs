@@ -12,10 +12,5 @@ namespace Threax.AspNetCore.UrlFix
         /// equal to this value will be redirected so that they do.
         /// </summary>
         public String CorrectPathBase { get; set; }
-
-        /// <summary>
-        /// The proctol to accept for urls. Set to null for any, defaults to https://
-        /// </summary>
-        public string Protocol { get; set; } = "https://";
     }
 }
