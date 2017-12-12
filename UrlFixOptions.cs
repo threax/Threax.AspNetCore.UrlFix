@@ -12,5 +12,7 @@ namespace Threax.AspNetCore.UrlFix
         /// equal to this value will be redirected so that they do.
         /// </summary>
         public String CorrectPathBase { get; set; }
+
+        public string CorrectScheme { get; set; } = "https";
     }
 }

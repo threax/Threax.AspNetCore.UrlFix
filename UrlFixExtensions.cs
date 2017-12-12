@@ -41,7 +41,7 @@ namespace Microsoft.Extensions.DependencyInjection
             options.CorrectPathBase = pathBase;
 
             //only use the middleware if a path is provided.
-            if (!String.IsNullOrEmpty(pathBase))
+            if (!String.IsNullOrEmpty(pathBase) || !String.IsNullOrEmpty(options.CorrectScheme))
             {
                 builder.UseMiddleware<UrlFixMiddleware>(options);
             }

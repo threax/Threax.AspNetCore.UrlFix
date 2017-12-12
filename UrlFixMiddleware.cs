@@ -9,6 +9,7 @@ namespace Threax.AspNetCore.UrlFix
 {
     public class UrlFixMiddleware
     {
+        private String correctScheme;
         private String correctPathBase;
         private RequestDelegate next;
 
@@ -16,12 +17,14 @@ namespace Threax.AspNetCore.UrlFix
         {
             this.next = next;
             this.correctPathBase = options.CorrectPathBase;
+            this.correctScheme = options.CorrectScheme?.ToLowerInvariant();
         }
 
         public async Task Invoke(HttpContext context)
         {
             var pathBase = context.Request.PathBase;
-            if (pathBase.HasValue && pathBase.Value != correctPathBase)
+            var scheme = context.Request.Scheme?.ToLowerInvariant();
+            if ((pathBase.HasValue && pathBase.Value != correctPathBase) || (scheme != correctScheme && correctScheme != null))
             {
                 var currentUri = new Uri(context.Request.GetDisplayUrl());
                 var uriBuilder = new UriBuilder(currentUri);
@@ -32,6 +35,7 @@ namespace Threax.AspNetCore.UrlFix
                     path = correctPathBase + path.Substring(pathBase.Value.Length);
                 }
                 uriBuilder.Path = path;
+                uriBuilder.Scheme = correctScheme ?? uriBuilder.Scheme;
 
                 context.Response.Redirect(uriBuilder.ToString());
             }
