@@ -2,10 +2,15 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.1.0</Version>
+    <Version>1.1.1</Version>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <IncludeSymbols>True</IncludeSymbols>
     <IncludeSource>True</IncludeSource>
+    <Description>A library to fix up urls if the current request is not what is expected.</Description>
+    <Authors>Andrew Piper</Authors>
+    <PackageLicenseUrl>https://github.com/threax/Threax.AspNetCore.UrlFix/blob/master/LICENSE</PackageLicenseUrl>
+    <PackageProjectUrl>https://github.com/threax/Threax.AspNetCore.UrlFix</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/threax/Threax.AspNetCore.UrlFix</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
