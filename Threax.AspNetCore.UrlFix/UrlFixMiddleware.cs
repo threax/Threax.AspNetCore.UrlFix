@@ -24,18 +24,28 @@ namespace Threax.AspNetCore.UrlFix
         {
             var pathBase = context.Request.PathBase;
             var scheme = context.Request.Scheme?.ToLowerInvariant();
-            if ((pathBase.HasValue && pathBase.Value != correctPathBase) || (scheme != correctScheme && correctScheme != null))
+
+            bool fixPathBase = correctPathBase != null && pathBase.HasValue && pathBase.Value != correctPathBase;
+            bool fixScheme = correctScheme != null && scheme != correctScheme;
+
+            if (fixPathBase || fixScheme)
             {
                 var currentUri = new Uri(context.Request.GetDisplayUrl());
                 var uriBuilder = new UriBuilder(currentUri);
-                var path = uriBuilder.Path;
-                var basePathIndex = path.IndexOf(pathBase.Value);
-                if (basePathIndex != -1)
+                if (fixPathBase)
                 {
-                    path = correctPathBase + path.Substring(pathBase.Value.Length);
+                    var path = uriBuilder.Path;
+                    var basePathIndex = path.IndexOf(pathBase.Value);
+                    if (basePathIndex != -1)
+                    {
+                        path = correctPathBase + path.Substring(pathBase.Value.Length);
+                    }
+                    uriBuilder.Path = path;
                 }
-                uriBuilder.Path = path;
-                uriBuilder.Scheme = correctScheme ?? uriBuilder.Scheme;
+                if (fixScheme)
+                {
+                    uriBuilder.Scheme = correctScheme;
+                }
 
                 context.Response.Redirect(uriBuilder.ToString());
             }
