@@ -45,6 +45,10 @@ namespace Threax.AspNetCore.UrlFix
                 if (fixScheme)
                 {
                     uriBuilder.Scheme = correctScheme;
+                    if (uriBuilder.Port == 80 || uriBuilder.Port == 443)
+                    {
+                        uriBuilder.Port = -1;
+                    }
                 }
 
                 context.Response.Redirect(uriBuilder.ToString());
